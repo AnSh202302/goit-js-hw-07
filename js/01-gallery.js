@@ -55,8 +55,11 @@ galleryListEl.insertAdjacentHTML("beforeend", imgCardsMarkupArr.join(""));
 galleryListEl.addEventListener("click", showOriginalImg);
 
 const instance = basicLightbox.create(`<img src="" width="800" height="600">`, {
-  onClose: (instance) => {
+  onShow: (instance) => {
     window.addEventListener("keydown", onCloseEsc);
+  },
+  onClose: (instance) => {
+    window.removeEventListener("keydown", onCloseEsc);
   },
 });
 
@@ -67,8 +70,6 @@ function showOriginalImg(evt) {
     if (!source) return;
     instance.element().querySelector("img").src = source;
     instance.show();
-    console.log(evt.target.dataset.source);
-    console.log(instance.element().querySelector("img".src));
   }
 }
 function onCloseEsc(e) {
